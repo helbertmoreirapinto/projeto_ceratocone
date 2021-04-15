@@ -1,8 +1,11 @@
 const loginController = require('../../presentation/controller/login-controller')
 
 module.exports = {
+  Query: {
+    login: loginController.login
+  },
+
   Mutation: {
-    login: loginController.login,
     signup: loginController.signup
   }
 }

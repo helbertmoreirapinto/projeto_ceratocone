@@ -13,11 +13,13 @@ const getExam = async (parent, args, context) => {
   let examId
   do {
     examId = Math.floor(totalExams.length * Math.random() + 1)
+    if (totalExams.length === userAnswers.length) return null
   } while (userAnswers.some(userAns => +userAns.examId === +examId))
 
   const { patientAge } = await ExamModel.findOne({ examId })
 
   const file = fs.readFileSync(path.join(__dirname, '..', '..', '..', 'exam-files', `img${examId}.png`))
+
   return {
     examId,
     file,

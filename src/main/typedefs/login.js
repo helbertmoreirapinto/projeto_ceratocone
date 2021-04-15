@@ -1,12 +1,14 @@
 const { gql } = require('apollo-server')
 
 module.exports = gql`
-  extend type Mutation {
+  extend type Query {
     login (
       login: String!
       password: String!
     ): String
-
+  }
+  
+  extend type Mutation {
     signup (
       name: String!
       login: String!
