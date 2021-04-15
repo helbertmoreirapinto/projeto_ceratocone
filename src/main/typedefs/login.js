@@ -5,7 +5,7 @@ module.exports = gql`
     login (
       login: String!
       password: String!
-    ): Boolean
+    ): String
 
     signup (
       name: String!
