@@ -1,27 +1,28 @@
 const { Schema, model } = require('mongoose')
 
-let Exam = new Schema({
-  url: {
-    type: String,
+let ExamAnswerModel = new Schema({
+
+  userId: {
+    type: Number,
     required: true
   },
 
-  examDate: {
-    type: Date,
+  examId: {
+    type: Number,
     required: true
   },
 
-  birthPatient: {
-    type: Date,
+  answer: {
+    type: Number,
     required: true
   }
 
 }, {
-  collection: 'exams',
+  collection: 'user-answers',
   strict: false,
   timestamps: true
 })
 
-Exam = model('Exam', Exam)
+ExamAnswerModel = model('ExamAnswerModel', ExamAnswerModel)
 
-module.exports = Exam
+module.exports = ExamAnswerModel

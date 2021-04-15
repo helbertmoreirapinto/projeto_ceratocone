@@ -20,7 +20,7 @@ module.exports = gql`
       userId: ID!
       examId: ID!
       answer: Int!
-    ): Exam
+    ): Boolean
   }
 
   type Exam {

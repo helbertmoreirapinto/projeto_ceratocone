@@ -1,30 +1,35 @@
+const ExamModel = require('../../infra/db/mongo/model/exam')
+const ExamAnswerModel = require('../../infra/db/mongo/model/exam-ans')
+
 const fs = require('fs')
 const path = require('path')
 
 const getExam = async (parent, args, context) => {
-  console.log(args.userId)
-  const file = fs.readFileSync(path.join(__dirname, 'send_img.png'))
-  return {
-    examId: 2,
-    file,
-    patientAge: 22,
-    examDate: new Date()
+  const { userId } = args
 
+  const userAnswers = await ExamAnswerModel.find({ userId })
+  const totalExams = fs.readdirSync(path.join(__dirname, '..', '..', '..', 'exam-files'))
+
+  let examId
+  do {
+    examId = Math.floor(totalExams.length * Math.random() + 1)
+  } while (userAnswers.some(userAns => +userAns.examId === +examId))
+
+  const { patientAge } = await ExamModel.findOne({ examId })
+
+  const file = fs.readFileSync(path.join(__dirname, '..', '..', '..', 'exam-files', `img${examId}.png`))
+  return {
+    examId,
+    file,
+    patientAge,
+    examDate: new Date()
   }
 }
 
 const examAnswer = async (parent, args, context) => {
-  const { userId, examId, answerId } = args
+  const { userId, examId, answer } = args
 
-  console.log(args)
-  const file = fs.readFileSync(path.join(__dirname, 'send_img1.png'))
-  return {
-    examId: 5,
-    file,
-    patientAge: 19,
-    examDate: new Date()
-
-  }
+  await ExamAnswerModel.create({ userId, examId, answer })
 }
 
 module.exports = {

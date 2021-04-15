@@ -1,27 +1,27 @@
 const { Schema, model } = require('mongoose')
 
-let ExamAns = new Schema({
+let Exam = new Schema({
   examId: {
     type: Number,
     required: true
   },
 
-  userId: {
+  patientAge: {
     type: Number,
     required: true
   },
 
-  answerId: {
+  patientId: {
     type: Number,
     required: true
   }
 
 }, {
-  collection: 'exams-answers',
+  collection: 'exams',
   strict: false,
   timestamps: true
 })
 
-ExamAns = model('ExamAns', ExamAns)
+Exam = model('Exam', Exam)
 
-module.exports = ExamAns
+module.exports = Exam
