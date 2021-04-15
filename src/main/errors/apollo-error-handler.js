@@ -6,6 +6,7 @@ const apolloErrorDictionary = {
 }
 
 function handle (error) {
+  console.log(error)
   const errorCode = error.extensions.exception.code || error.extensions.code
   const errorMessage = error.message
 

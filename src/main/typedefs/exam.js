@@ -5,7 +5,9 @@ module.exports = gql`
   scalar File
 
   extend type Query {
-    nextExam: Exam
+    nextExam(
+      userId: ID!
+    ): Exam
 
     test(
       arg1:String!
@@ -15,9 +17,10 @@ module.exports = gql`
 
   extend type Mutation {
     examAns (
+      userId: ID!
       examId: ID!
       answer: Int!
-    ): Boolean
+    ): Exam
   }
 
   type Exam {
