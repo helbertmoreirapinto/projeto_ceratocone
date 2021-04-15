@@ -3,7 +3,7 @@ const { Schema, model } = require('mongoose')
 let ExamAnswerModel = new Schema({
 
   userId: {
-    type: Number,
+    type: String,
     required: true
   },
 
