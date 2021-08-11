@@ -1,4 +1,4 @@
-const UserModel = require('../../infra/db/sqlite3/user')
+const UserModel = require('../../infra/db/sqlite3/model/user')
 
 const login = async (parent, args, context) => {
   const { login, password } = args
