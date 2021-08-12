@@ -1,5 +1,5 @@
-const ExamModel = require('../../infra/db/sqlite3/model/exam')
-const ExamAnswerModel = require('../../infra/db/sqlite3/model/exam-ans')
+const ExamModel = require('../../infra/db/models/exam')
+const ExamAnswerModel = require('../../infra/db/models/exam-ans')
 
 const fs = require('fs')
 const path = require('path')

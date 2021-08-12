@@ -1,6 +1,7 @@
 const Sequelize = require('sequelize')
+const sqlite3 = require('sqlite3').verbose()
 
-const localhostConection = {
+const localhostConnection = {
   DB_HOST: 'localhost',
   DB_PORT: '3000',
   DB_NAME: 'KCLabel',
@@ -8,11 +9,13 @@ const localhostConection = {
   DB_PASS: 'yeIGJEABqOFffY1J'
 }
 
-const DB_HOST = process.env.DB_HOST || localhostConection.DB_HOST
-const DB_PORT = process.env.DB_PORT || localhostConection.DB_PORT
-const DB_NAME = process.env.DB_NAME || localhostConection.DB_NAME
-const DB_USER = process.env.DB_USER || localhostConection.DB_USER
-const DB_PASS = process.env.DB_PASS || localhostConection.DB_PASS
+const DB_HOST = process.env.DB_HOST || localhostConnection.DB_HOST
+const DB_PORT = process.env.DB_PORT || localhostConnection.DB_PORT
+const DB_NAME = process.env.DB_NAME || localhostConnection.DB_NAME
+const DB_USER = process.env.DB_USER || localhostConnection.DB_USER
+const DB_PASS = process.env.DB_PASS || localhostConnection.DB_PASS
+
+// const db = new sqlite3.Database(`${DB_NAME}`)
 
 const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASS, {
   dialect: 'sqlite',

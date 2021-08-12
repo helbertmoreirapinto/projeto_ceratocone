@@ -1,10 +1,10 @@
-const database = require('./database')
 
-async function start () {
+function connect () {
+  const database = require('./database')
   require('./migrations/exam')
   database.sync()
 }
 
 module.exports = {
-  start
+  connect
 }
