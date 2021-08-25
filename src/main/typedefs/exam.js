@@ -8,11 +8,6 @@ module.exports = gql`
     nextExam(
       userId: String!
     ): Exam
-
-    test(
-      arg1:String!
-    ): String
-
   }
 
   extend type Mutation {
