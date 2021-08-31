@@ -3,7 +3,7 @@ const localhost = {
 }
 
 const dev = {
-  MONGO_URL: 'mongodb+srv://userApp:yeIGJEABqOFffY1J@apicluster.owqsv.mongodb.net/certaocone'
+  MONGO_URL: 'mongodb+srv://userApp:yeIGJEABqOFffY1J@kccluster.owqsv.mongodb.net/certaocone'
 }
 
-module.exports = localhost
+module.exports = dev
