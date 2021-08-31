@@ -22,6 +22,9 @@ module.exports = gql`
     examId: ID
     file: File
     patientAge: Int
-    examDate: Date
+    info01: String
+    info02: String
+    info03: String
+    info04: String
   }
 `

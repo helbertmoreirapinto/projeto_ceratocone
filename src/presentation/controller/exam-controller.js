@@ -1,5 +1,5 @@
-const ExamModel = require('../../infra/db/mongo/model/exam')
 const ExamAnswerModel = require('../../infra/db/mongo/model/exam-ans')
+const csvtojson = require('csvtojson')
 
 const fs = require('fs')
 const path = require('path')
@@ -8,23 +8,32 @@ const getExam = async (parent, args, context) => {
   const { userId } = args
 
   const userAnswers = await ExamAnswerModel.find({ userId })
-  const totalExams = fs.readdirSync(path.join(__dirname, '..', '..', '..', 'exam-files'))
+  const totalExams = await csvtojson().fromFile(path.join(__dirname, '..', '..', '..', 'info.csv'))
+  if (totalExams.length === userAnswers.length) return null
 
-  let examId
-  do {
-    examId = Math.floor(totalExams.length * Math.random() + 1)
-    if (totalExams.length === userAnswers.length) return null
-  } while (userAnswers.some(userAns => +userAns.examId === +examId))
+  for (const exam of totalExams) {
+    console.log(exam)
+    const { image, info01 = 'ND', info02 = 'ND', info03 = 'ND', info04 = 'ND' } = exam
+    const infosSplit = image.split('_')
+    const [patientId, examSide, examDate, examHour] = infosSplit
+    const examId = `${patientId}_${examDate}_${examHour}`
 
-  const { patientAge } = await ExamModel.findOne({ examId })
+    let file
+    try {
+      file = fs.readFileSync(path.join(__dirname, '..', '..', '..', 'exam-files', image))
+    } catch { continue }
 
-  const file = fs.readFileSync(path.join(__dirname, '..', '..', '..', 'exam-files', `img${examId}.png`))
+    if (userAnswers.find(ans => ans.examId === examId)) continue
 
-  return {
-    examId,
-    file,
-    patientAge,
-    examDate: new Date()
+    return {
+      examId,
+      file,
+      patientAge: 99,
+      info01,
+      info02,
+      info03,
+      info04
+    }
   }
 }
 
