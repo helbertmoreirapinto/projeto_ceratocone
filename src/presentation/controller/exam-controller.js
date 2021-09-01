@@ -13,10 +13,11 @@ const getExam = async (parent, args, context) => {
 
   for (const exam of totalExams) {
     console.log(exam)
-    const { image, info01 = 'ND', info02 = 'ND', info03 = 'ND', info04 = 'ND' } = exam
+    const { image, tkc = 'ND', badd = 'ND', isv = 'ND' } = exam
     const infosSplit = image.split('_')
-    const [patientId, examSide, examDate, examHour] = infosSplit
+    const [patientId, side, examDate, examHour] = infosSplit
     const examId = `${patientId}_${examDate}_${examHour}`
+    console.log(side)
 
     let file
     try {
@@ -28,11 +29,10 @@ const getExam = async (parent, args, context) => {
     return {
       examId,
       file,
-      patientAge: 99,
-      info01,
-      info02,
-      info03,
-      info04
+      age: 99,
+      tkc,
+      badd,
+      isv
     }
   }
 }

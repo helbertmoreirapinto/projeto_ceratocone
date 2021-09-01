@@ -13,18 +13,17 @@ module.exports = gql`
   extend type Mutation {
     examAns (
       userId: String!
-      examId: ID!
+      examId: String!
       answer: Int!
     ): Boolean
   }
 
   type Exam {
-    examId: ID
+    examId: String
     file: File
-    patientAge: Int
-    info01: String
-    info02: String
-    info03: String
-    info04: String
+    age: Int
+    tkc: String
+    badd: String
+    isv: String
   }
 `

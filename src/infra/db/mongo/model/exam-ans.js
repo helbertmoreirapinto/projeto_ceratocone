@@ -8,7 +8,7 @@ let ExamAnswerModel = new Schema({
   },
 
   examId: {
-    type: Number,
+    type: String,
     required: true
   },
 
