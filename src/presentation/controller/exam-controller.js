@@ -7,17 +7,17 @@ const path = require('path')
 const getExam = async (parent, args, context) => {
   const { userId: usuarioId } = args
 
-  const userAnswers = await ExamAnswerModel.findAll({ usuarioId })
+  const userAnswers = await ExamAnswerModel.findAll({ where: { usuarioId } })
   const totalExams = await csvtojson().fromFile(path.join(__dirname, '..', '..', '..', 'info.csv'))
   if (totalExams.length === userAnswers.length) return null
 
   for (const exam of totalExams) {
-    console.log(exam)
+    // console.log(exam)
     const { image, tkc = 'ND', badd = 'ND', isv = 'ND' } = exam
     const infosSplit = image.split('_')
     const [patientId, side, examDate, examHour] = infosSplit
     const examId = `${patientId}_${examDate}_${examHour}`
-    console.log(side)
+    // console.log(side)
 
     let file
     try {
