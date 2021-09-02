@@ -15,9 +15,11 @@ const getExam = async (parent, args, context) => {
     // console.log(exam)
     const { image, tkc = 'ND', badd = 'ND', isv = 'ND' } = exam
     const infosSplit = image.split('_')
-    const [patientId, side, examDate, examHour] = infosSplit
+    const patientId = infosSplit[0]
+    const examDate = infosSplit[2]
+    const examHour = infosSplit[3]
+
     const examId = `${patientId}_${examDate}_${examHour}`
-    // console.log(side)
 
     let file
     try {
