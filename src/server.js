@@ -1,4 +1,6 @@
 const app = require('./app')
+const https = require('https')
+const fs = require('fs')
 
 const port = process.env.PORT || 3333
 
@@ -27,7 +29,13 @@ async function startUsers () {
   }
 }
 
-app.listen({ port }, async () => {
+const privateKey = fs.readFileSync('sslcert/server.key', 'utf8')
+const certificate = fs.readFileSync('sslcert/server.crt', 'utf8')
+
+const credentials = { key: privateKey, cert: certificate }
+const httpsServer = https.createServer(app)
+
+httpsServer.listen({ port }, async () => {
   await start()
   await startUsers()
   console.log(`Server ready on PORT ${port}`)
