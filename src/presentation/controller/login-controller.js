@@ -3,7 +3,9 @@ const UserModel = require('../../infra/db/sqlite/model/usuario')
 const login = async (parent, args, context) => {
   const { login, password: senha } = args
   const user = await UserModel.findOne({
-    login, senha
+    where: {
+      login, senha
+    }
   })
   return (user) ? user.id : null
 }
