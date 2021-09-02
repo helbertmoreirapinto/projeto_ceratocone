@@ -1,17 +1,17 @@
-const UserModel = require('../../infra/db/mongo/model/user')
+const UserModel = require('../../infra/db/sqlite/model/usuario')
 
 const login = async (parent, args, context) => {
-  const { login, password } = args
-  const user = await UserModel.find({
-    login, password
+  const { login, password: senha } = args
+  const user = await UserModel.findOne({
+    login, senha
   })
-  return (user.length) ? user[0]._id : null
+  return (user) ? user.id : null
 }
 
 const signup = async (parent, args, context) => {
   const { login, password } = args
 
-  return await UserModel.create({ login, password })
+  return await UserModel.create({ login, senha: password })
 }
 
 module.exports = {

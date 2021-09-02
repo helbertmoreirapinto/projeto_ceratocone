@@ -1,13 +1,13 @@
-const ExamAnswerModel = require('../../infra/db/mongo/model/exam-ans')
+const ExamAnswerModel = require('../../infra/db/sqlite/model/resposta')
 const csvtojson = require('csvtojson')
 
 const fs = require('fs')
 const path = require('path')
 
 const getExam = async (parent, args, context) => {
-  const { userId } = args
+  const { userId: usuarioId } = args
 
-  const userAnswers = await ExamAnswerModel.find({ userId })
+  const userAnswers = await ExamAnswerModel.findAll({ usuarioId })
   const totalExams = await csvtojson().fromFile(path.join(__dirname, '..', '..', '..', 'info.csv'))
   if (totalExams.length === userAnswers.length) return null
 
@@ -24,12 +24,16 @@ const getExam = async (parent, args, context) => {
       file = fs.readFileSync(path.join(__dirname, '..', '..', '..', 'exam-files', image))
     } catch { continue }
 
-    if (userAnswers.find(ans => ans.examId === examId)) continue
+    if (userAnswers.find(ans =>
+      +ans.patientId === +patientId &&
+      +ans.examDate === +examDate &&
+      +ans.examHour === +examHour
+    )) continue
 
     return {
       examId,
       file,
-      age: 99,
+      age: 99, // ver necessidade
       tkc,
       badd,
       isv
@@ -39,8 +43,16 @@ const getExam = async (parent, args, context) => {
 
 const examAnswer = async (parent, args, context) => {
   const { userId, examId, answer } = args
+  const infosSplit = examId.split('_')
+  const [patientId, examDate, examHour] = infosSplit
 
-  await ExamAnswerModel.create({ userId, examId, answer })
+  await ExamAnswerModel.create({
+    usuarioId: userId,
+    patientId,
+    examDate,
+    examHour,
+    resposta: answer
+  })
 }
 
 module.exports = {

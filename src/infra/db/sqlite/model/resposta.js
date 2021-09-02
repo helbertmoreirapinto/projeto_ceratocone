@@ -8,7 +8,15 @@ const Produto = database.define('respostas', {
     allowNull: false,
     primaryKey: true
   },
-  exameId: {
+  patientId: {
+    type: Sequelize.INTEGER,
+    allowNull: false
+  },
+  examDate: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
+  examHour: {
     type: Sequelize.STRING,
     allowNull: false
   },
