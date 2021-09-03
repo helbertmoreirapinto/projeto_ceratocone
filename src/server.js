@@ -1,22 +1,17 @@
 const app = require('./app')
-const https = require('https')
-const fs = require('fs')
+// const https = require('https')
+// const fs = require('fs')
 
 const port = process.env.PORT || 3333
 
-async function start () {
+const start = async () => {
   const database = require('../db-index')
   require('./infra/db/sqlite/model/usuario')
   require('./infra/db/sqlite/model/resposta')
-
-  try {
-    await database.sync()
-  } catch (error) {
-    console.log(error)
-  }
+  await database.sync().catch(console.error)
 }
 
-async function startUsers () {
+const startUsers = async () => {
   const Usuario = require('./infra/db/sqlite/model/usuario')
 
   const usuarios = await Usuario.findAll()
@@ -29,13 +24,13 @@ async function startUsers () {
   }
 }
 
-const privateKey = fs.readFileSync('sslcert/server.key', 'utf8')
-const certificate = fs.readFileSync('sslcert/server.crt', 'utf8')
+// const privateKey = fs.readFileSync('sslcert/server.key', 'utf8')
+// const certificate = fs.readFileSync('sslcert/server.crt', 'utf8')
 
-const credentials = { key: privateKey, cert: certificate }
-const httpsServer = https.createServer(app)
+// const credentials = { key: privateKey, cert: certificate }
+// const httpsServer = https.createServer(app)
 
-httpsServer.listen({ port }, async () => {
+app.listen({ port }, async () => {
   await start()
   await startUsers()
   console.log(`Server ready on PORT ${port}`)

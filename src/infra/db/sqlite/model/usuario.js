@@ -19,6 +19,9 @@ const Usuario = database.define('usuario', {
   senha: {
     type: Sequelize.STRING,
     allowNull: false
+  },
+  exameAtual: {
+    type: Sequelize.INTEGER
   }
 })
 
